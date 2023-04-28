@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello HomeController!{% endblock %}
+
+{% block body %}
+
+  {% if lesprojets == null %}
+    <img id = "homeimg" src="{{asset('home.png')}}"  alt="logo">
+ {% else %}
+ <div class= "white-windows" style ='height : 700px; padding-top : 50px'>
+  {% for article in articles %}
+
+<div class="card mb-3" style="width: 18rem; margin-left : 100px ; display : inline-block" >
+  <div class="card-body">
+    <h5 class="card-title">{{article.name}}</h5>
+    <p class="card-text">langue: {{article.langue}} </p>
+     {# <p class="card-text">Nombre de source: {{project.source}} </p> #}
+     {# <p class="card-text">Nombre de traduction: {{project.traduction}} </p> #}
+     {# <p class="card-text">Nombre de traduction: {{project.t}} </p> #}
+    <a href="{{path('app_traducte_source', {'id':article.id}) }}" class="btn btn-primary">traduire</a>
+
+  </div>
+</div>
+    {% endfor %}
+    {{ knp_pagination_render(articles) }}
+  </div>  
+    
+ {% endif %}
+
+{% endblock %}

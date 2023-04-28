@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TraducteSourceController!{% endblock %}
+
+{% block body %}
+<div class= "white-windows">
+{{ form_start(form, { 'attr' : { 'class': 'form_projet_creation' } }) }}
+
+ <h2 id = "title-box-traduct_source">Traduire une source</h2>
+    <div class="card">
+  <div class="card-body">
+    {{traducte_projet.name}}
+  </div>
+</div>
+    <div class = "mb-3">
+		{{ form_label(form.source,'Source', {'label_attr': {'class': 'form-label'}})  }}
+		{{form_row(form.source , {'attr' : {'class' : 'form-control'}}) }} 
+	<div>
+
+	<div>
+		{{form_label(form.langue,'Langue', {'label_attr': {'class': 'form-label'}})}}
+		{{form_row(form.langue, {'attr' : {'class' : 'form-control'}})}} 
+	</div>
+
+    <div class = "mb-3">
+		{{ form_label(form.text,'Traduction', {'label_attr': {'class': 'form-label'}})  }}
+		{{form_row(form.text , {'attr' : {'class' : 'form-control'}}) }} 
+	<div>
+      
+{{form_end(form)}}
+ </div>
+{% endblock %}

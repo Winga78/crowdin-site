@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CreateProjectController!{% endblock %}
+
+{% block body %}
+<h2 id = "create_projet_title">Gestion projets > Sources</h2>
+
+<div class= "white-windows" style = "height : 830px">
+ 
+
+{{ form_start(form, { 'attr' : { 'class': 'form_projet_creation' } }) }}
+	
+ <h2 id = "title-box-projet">Créer un projet</h2>
+		<div class = "col-auto">
+		{{ form_label(form.name,'Nom', {'label_attr': {'class': 'form-label'}})  }}
+		{{form_row(form.name , {'attr' : {'class' : 'form-control'}}) }} 
+	<div>
+
+	<div class = "col-auto">
+		{{form_label(form.langue,'Langue', {'label_attr': {'class': 'form-label'}})}}
+		{{form_row(form.langue, {'attr' : {'class' : 'form-control'}})}} 
+	</div>
+      
+{{form_end(form)}}
+
+<h2 id = "title-box-source">Créer une source</h2>
+
+ {{ form_start(form_source, { 'attr' : { 'class': 'form_projet_creation' } }) }}
+	
+	
+	<div >
+	{{form_label(form_source.project,'Projet', {'label_attr': {'class': 'form-label'}})}}
+		{{form_row(form_source.project, {'attr' : {'class' : 'form-control'}})}} 
+	
+	</div>
+
+      
+    <div>
+		{{form_label(form_source.content,'Contenu', {'label_attr': {'class': 'form-label'}})}}
+		{{form_row(form_source.content, {'attr' : {'class' : 'form-control' ,'rows':"4" }})}} 
+	</div>
+
+	<label for="avatar">Choose a csv file:</label>
+
+<input type="file" id="csvfile" name="csvfile" accept="file/csv">
+<button id="uploadfile" type="button"> source </button>
+{{form_end(form_source)}}
+
+<script>
+
+ const uploadfile = document.getElementById("uploadfile");
+const inputfile = document.getElementById("csvfile");
+const inputTextArea = document.getElementById("create_source_content");
+const inputNameProject = document.getElementById("project_creation_name");
+console.log(inputNameProject);
+	let i=0;
+ uploadfile.addEventListener("click", function(event){
+	event.preventDefault();
+
+	var file = inputfile.files[0];
+	readCSVFile(file);
+
+	function readCSVFile(file) {
+  Papa.parse(file, {
+  header: true,
+  delimiter: ";",
+  skipEmptyLines : true,
+  complete: function(results) {
+	 const data = results.data;
+     
+		//console.log(data[i].traduction)
+		if(i < data.length){
+			inputNameProject.value = results.data[i].key;
+           inputTextArea.innerText = results.data[i].traduction;
+
+		    i+=1;
+		}
+		else {
+			i = 0;
+		}
+
+	 
+  }
+});
+}
+
+})
+
+
+ 
+</script>
+ </section>
+{% endblock %}
