@@ -21,13 +21,13 @@ class DashboardController extends AbstractController
     #[Route('/dashboard', name: 'app_dashboard')]
     public function index(EntityManagerInterface $entityManager): Response
     {
-       $l = "en";
+      
         $dataTraduction =  $this ->traductionTarget->findSqlRequest($this->getUser()->getId());
         // dd($dataTraduction);
         return $this->render('dashboard/index.html.twig', [
             'controller_name' => 'DashboardController',
             'dataTraduction' =>$dataTraduction,
-            'l' => $l,
+            
         ]);
     }
 }

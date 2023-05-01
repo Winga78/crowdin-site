@@ -3,7 +3,7 @@
 {% block title %}Hello SignUpController!{% endblock %}
 
 {% block body %}
-<div class = "white-windows-auth"> 
+
 {{ form_start(form, { 'attr' : { 'class': 'subscription' } }) }}
 	<h2>Inscription</h2>
 		<div class = "mb-3">
@@ -16,11 +16,12 @@
 		{{form_row(form.email, {'attr' : {'class' : 'form-control'}})}} 
 		</div>
 		<div class="mb-3">
+		{{ form_label(form.password,'Mot de passe', {'label_attr': {'class': 'form-label'}})  }}
 		{{form_row(form.password, {'attr' : {'class' : 'form-control'}})}} 
 		</div>
 
 		
 {{form_end(form)}}
-</div>
+
 
 {% endblock %}

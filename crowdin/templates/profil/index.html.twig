@@ -4,13 +4,20 @@
 
 {% block body %}
 
-<div class= "white-windows" style = " overflow:scroll ; max-height: 700px;" >
 
+ <h2>Description</h2>
+{% if userdescription == null %}
+  <p id = "description"> pas de description </p>
 
- <section class= "div_projet_creation">
+{% else %}
+
+<p id = "description"> {{userdescription}} </p>
+  {% endif %}
+
+<a href="{{path('app_dashboard')}}">Dashbord</a>
 
 <table class="table">
-  <h2 id = "title-box-projet">Les projets traduits</h2>
+  <h2>Les projets traduits</h2>
 <thead>
  <tr>
       <th scope="col">Projet</th>
@@ -30,31 +37,29 @@
 {% endfor %}
   </table>
 
-  <h2 id = "title-box-projet">Mes Langues</h2>
-<div class="card" style="width: 18rem;">
-  <div class="card-header">
-    Code langue
-  </div>
-  <ul class="list-group list-group-flush">
+  <h2>Mes Langues</h2>
+<table class="table">
+<thead>
+ <tr>
+      <th scope="col">Code langue</th>
+    </tr>
+</thead>
+
+  
 {% for userlangue in userlangues %}
- <li class="list-group-item">{{userlangue.langue}}</li>
+ <tr>
+   <td> {{userlangue.langue}}</td>
+ </tr>
+  </tbody>
 {% endfor %}
 
-</ul>
-</div>
 
- <h2 id = "title-box-projet">Description</h2>
-{% if userdescription == null %}
-  <p id = "description"> pas de description </p>
+  </table>
 
-{% else %}
- <p id = "description"> {{userdescription}} </p>
-  {% endif %}
-
-
+<div class = "align">
    {{ form_start(form, { 'attr' : { 'class': 'form_projet_creation' } }) }}
 	
- <h2 id = "title-box-projet">Modifier description</h2>
+ <h3 id = "title-box-projet">Modifier description</h3>
     <div class = "col-auto">
 		{{ form_label(form.description,'description : ', {'label_attr': {'class': 'form-label'}})  }}
 		{{form_row(form.description , {'attr' : {'class' : 'form-control'}}) }} 
@@ -62,10 +67,10 @@
       
 {{form_end(form)}}
 
-
+</div>
  {{ form_start(form_langue, { 'attr' : { 'class': 'form_projet_creation' } }) }}
 	
- <h2 id = "title-box-projet">Modifier Langue</h2>
+ <h3 id = "title-box-projet">Modifier Langue</h3>
     <div class = "col-auto">
 		{{ form_label(form_langue.langue,'langue : ', {'label_attr': {'class': 'form-label'}})  }}
 		{{form_row(form_langue.langue , {'attr' : {'class' : 'form-control'}}) }} 
@@ -73,6 +78,5 @@
       
 {{form_end(form_langue)}}
 
-<a href="{{path('app_dashboard')}}">Dashbord</a>
- </div>
+
 {% endblock %}

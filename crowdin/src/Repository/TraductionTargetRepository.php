@@ -54,7 +54,7 @@ class TraductionTargetRepository extends ServiceEntityRepository
     public function findSqlRequest($userId)
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = 'SELECT project.name , project.datecreation, source.content, project.langue, COUNT(project_id) AS datasource, COUNT(source_id) AS datatraduction  FROM project LEFT JOIN source ON project.id = project_id LEFT JOIN traduction_target ON source_id = source.id where project.user_id = :userId GROUP BY source.content,project.name, project.datecreation, project.langue;';
+        $sql = 'SELECT project.name , project.datecreation, traduction_target.text, project.langue, COUNT(project_id) AS datasource, COUNT(source_id) AS datatraduction  FROM project LEFT JOIN source ON project.id = project_id LEFT JOIN traduction_target ON source_id = source.id where project.user_id = :userId GROUP BY traduction_target.text, source.content,project.name, project.datecreation, project.langue;';
         $stmt = $conn->prepare($sql);
         $stmt->bindValue('userId', $userId);
         $resultSet = $stmt->executeQuery();

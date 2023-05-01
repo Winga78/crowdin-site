@@ -18,11 +18,11 @@ class DisplayProject
     public function projectsAffichage($user) 
     {
         $tab = [];
-        $res_project_non_traduit = $this->projectRepository->findSqlRequest();
+        // $res_project_non_traduit = $this->projectRepository->findSqlRequest();
         $leslangues= $this->userLangueRepository->countUserLanguage($user);
         // $res_user_langues =  $this->projectRepository->findProjectUserLangueById($user->getId());
-        $projects =  $this->projectRepository->findProjectUserById($user->getId());
-    
+        $projects =  $this->projectRepository->findSqlRequest($user->getId());
+  
       function removeDuplicatesByKeyValue($array, $key) {
         $uniqueArray = array_reduce($array, function($accumulator, $currentValue) use ($key) {
             $keyValue = $currentValue[$key];
@@ -35,7 +35,7 @@ class DisplayProject
         return $uniqueArray;
     }
 
-       if($leslangues < 2){
+       if($leslangues < 3){
          $message = "vous n'êtes pas traducteur";
        }
        else {
@@ -47,5 +47,10 @@ class DisplayProject
        
     $array = removeDuplicatesByKeyValue($tab, "id");
         return $array;
+    }
+
+    public function projectCount(){
+      $projectcount = $this->projectRepository->findProjectCount();
+       return $projectcount;
     }
 }

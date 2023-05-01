@@ -21,11 +21,18 @@
  <ul class="nav justify-content-center">
        <div class="a">
     <a class="navbar-brand" href="{{path('app_home')}}">
-      <img src="{{asset('Crowdin.png')}}" alt="Bootstrap" >
+      <img class = "logosite" src="{{asset('Crowdin.png')}}" alt="Bootstrap" >
     </a>
   </div>
     
-  <li class="nav-item">
+ 
+  
+
+
+  <div id = "info">
+{%if app.user %} 
+
+ <li class="nav-item">
     <a class="nav-link active" aria-current="page" href="{{path('app_home')}}">Home</a>
   </li>
   <li class="nav-item">
@@ -34,18 +41,11 @@
   <li class="nav-item">
     <a class="nav-link" href="{{path('app_create_project')}}">Projet</a>
   </li>
-  
-  <li class="nav-item">
-    <a class="nav-link disabled">Disabled</a>
-  </li>
-  
 
-  <div id = "info">
-{%if app.user %} 
 <li class="nav-item">
-				<a class="nav-link" href="{{path('app_login')}}">Deconnexion</a>
+				<a class="nav-link" href="{{path('app_login')}}"><p id = "deconnexion">Déconnexion</p></a>
 			</li>
-			<li class="nav-item"> <h1> Session de {{app.user.username}} </h1> </li>
+	
 
 			{% else %}
 			
@@ -61,7 +61,6 @@
 </ul>
 	  
 	 
-
     <main>
         {% block body %}
        

@@ -48,17 +48,27 @@ class ProjectRepository extends ServiceEntityRepository
                ;
     }
 
-    public function findSqlRequest()
+    public function findSqlRequest($userId)
     {
         $conn = $this->getEntityManager()->getConnection();
-        $sql = ' SELECT * FROM (SELECT project.id , project.langue, project.name , user_langue.langue as t, COUNT(source.id) as source, COUNT(source_id) as traduction FROM project LEFT JOIN user_langue ON project.user_id = user_langue.user_id  LEFT JOIN source ON project.id = project_id LEFT JOIN traduction_target ON source.id = source_id GROUP BY project.name, t ,project.langue, project.id) as subquery WHERE subquery.traduction < source;
-        ';
+        $sql = 'SELECT project.id, project.user_id , project.name, pul.user_id, pult.user_id, project.langue FROM project INNER JOIN user_langue as pul ON pul.user_id = project.user_id INNER JOIN user_langue as pult ON pul.langue = pult.langue WHERE pult.user_id = :userId and pul.user_id != :userId;';
+        // $sql = 'SELECT project.id , project.name , project.langue , count(source.id) as source , COUNT(source_id) as traduction FROM user_langue as plu INNER JOIN project ON project.user_id = plu.user_id  INNER  JOIN user_langue as utl ON utl.langue = plu.langue LEFT JOIN source ON project.id = source.project_id LEFT JOIN traduction_target ON source.id = traduction_target.source_id  where utl.user_id = :userId and plu.user_id != :userId GROUP BY project.name , project.langue, project.id;';
+        // $sql = ' SELECT * FROM (SELECT project.id , project.langue, project.name , user_langue.user_id as uid, user_langue.langue as t, COUNT(source.id) as source, COUNT(source_id) as traduction FROM project LEFT JOIN user_langue ON project.user_id = user_langue.user_id  LEFT JOIN source ON project.id = project_id LEFT JOIN traduction_target ON source.id = source_id GROUP BY project.name, t ,project.langue, project.id) as subquery WHERE subquery.traduction < source
+        // and subquery.uid = :userId;';
         $stmt = $conn->prepare($sql);
+        $stmt->bindValue('userId', $userId);
         $resultSet = $stmt->executeQuery();
         return $resultSet->fetchAll();
     }
 
-
+    public function findProjectCount()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT source.project_id as id , COUNT(source.id) as sources, COUNT(traduction_target.source_id) as traductions FROM source LEFT JOIN traduction_target ON source.id = traduction_target.source_id GROUP BY id;';
+        $stmt = $conn->prepare($sql);
+        $resultSet = $stmt->executeQuery();
+        return $resultSet->fetchAll();
+    }
 
     public function findProjectUserById($userId)
     {

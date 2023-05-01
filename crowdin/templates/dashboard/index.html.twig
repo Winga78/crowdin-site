@@ -3,17 +3,17 @@
 {% block title %}Hello DashboardController!{% endblock %}
 
 {% block body %}
-<div class= "white-windows" style ='overflow:scroll; max-height: 800px;'>
-<section class= "div_projet_creation">
-<table class="table">
+<div class= "white-windows">
+
+<table class="table" style = "margin-top : 15px">
 <thead>
  <tr>
       <th scope="col">Noms</th>
       <th scope="col">Crée le :</th>
       <th scope="col">Langue</th>
-      <th scope="col">Sources</th>
-       <th scope="col">Traduction</th>
-       <th scope="col">Contenu</th>
+      <th scope="col">nombre Sources</th>
+       <th scope="col">nombre Traduction</th>
+       <th scope="col">Tradution</th>
     </tr>
 </thead>
 
@@ -25,15 +25,15 @@
      <td>{{data["langue"]}}</td>
       <td class = "nbContenu">{{data["datasource"]}}</td>
        <td class = "nbTraduction">{{data["datatraduction"]}}</td>   
-       <td class = "source">{{data["content"]}}</td> 
+       <td class = "source">{{data["text"]}}</td> 
   
 </tr>
     </tbody>
 {% endfor %}
-</section>
 
-<div style = "width:800px">
-  <canvas id="myChart"></canvas>
+
+<div style = "width:1000px;">
+  <canvas id="myChart" style = "margin-bottom: 50px;"></canvas>
 </div>
 </div>
 
@@ -44,13 +44,13 @@
   </div>
 
   <div class="col-auto">
-    <button id = "confirm" type="submit" class="btn btn-primary mb-3">Confirm</button>
+    <button id = "confirm" type="submit" class="btn-subscription">export  csv</button>
   </div>
 </form>
 
 
-<script>
 
+<script>
  mytab = []
  arraynbContenu = []
  arraytraduct = []
@@ -94,7 +94,7 @@
     plugins: {
       title: {
         display: true,
-        text: 'Les sources et Projets'
+        text: 'Evolution des projets à traduire'
       }
     },
       scales: {
