@@ -1,7 +1,5 @@
 # crowdin-site
 
-## Etape 1 
-
 ### Lancer le projet 
 
 `cd crowdin`
